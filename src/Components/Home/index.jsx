@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div className="container mx-auto flex flex-wrap justify-center gap-10 py-8">
       {loading ? (
-        <p className="mx-auto text-2xl text-center">loading data....</p>
+        <span className="animate-spin delay-0 inline-block w-10 h-10 border-2 border-solid  border-indigo-600 rounded-full"></span>
       ) : recipeList && recipeList.length > 0 ? (
         recipeList.map((item) => <RecipeItem  key={item.id} item={item} />)
       ) : (

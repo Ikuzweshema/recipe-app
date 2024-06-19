@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalContext } from "../Context";
+import { FaStar } from "react-icons/fa";
+import { FaStarHalfStroke } from "react-icons/fa6";
 
 const Details = () => {
   const { id } = useParams();
@@ -31,20 +33,36 @@ const Details = () => {
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <span className="text-sm text-cyan-700 font-medium ">
+        <div className=" flex justify-between">
+        <span className="text-lg text-cyan-800 font-medium ">
           {recipeDetails?.recipe?.publisher}
         </span>
-        <h3 className="font-bold text-2xl truncate text-black">
+        <div>
+          {" "}
+          <button
+            onClick={() => addFavorite(recipeDetails?.recipe)}
+             className="text-sm rounded-lg mt-5   p-3 px-8 font-medium tracking-wider bg-indigo-700 text-white flex gap-1 justify-center items-center"
+          >
+            {favoritesList && favoritesList.length >0 && favoritesList.findIndex(
+              (item) => item.id == recipeDetails?.recipe?.id
+            ) !== -1
+              ? <FaStarHalfStroke/>
+              : <FaStar/>  }
+          </button>
+        </div>
+        </div>
+       
+        <h3 className="font-bold text-xl truncate text-black">
           {recipeDetails?.recipe?.title}
         </h3>
         <div>
-          <span className="text-2xl font-semibold text-black ">
+          <span className="text-xl text-center font-semibold text-black ">
             Ingredients
           </span>
-          <ul className=" flex flex-col gap-3">
+          <ol className=" flex flex-col list-decimal gap-3 mt-2">
             {recipeDetails?.recipe?.ingredients?.map((item, index) => {
               return (
-                <li key={index} className="text-black">
+                <li key={index} className="text-black m-1 list-item">
                   <span>
                     {" "}
                     {item.quantity} {item.unit}
@@ -53,21 +71,9 @@ const Details = () => {
                 </li>
               );
             })}
-          </ul>
+          </ol>
         </div>
-        <div>
-          {" "}
-          <button
-            onClick={() => addFavorite(recipeDetails?.recipe)}
-            className="text-sm rounded-lg mt-5 inline-block uppercase  p-3 px-8 font-medium tracking-wider bg-black shadow-md text-white"
-          >
-            {favoritesList && favoritesList.length >0 && favoritesList.findIndex(
-              (item) => item.id == recipeDetails?.recipe?.id
-            ) !== -1
-              ? "Remove from favorites"
-              : "Add To Favorites"}
-          </button>
-        </div>
+       
       </div>
     </div>
   );
